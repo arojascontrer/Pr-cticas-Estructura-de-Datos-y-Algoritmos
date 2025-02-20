@@ -1,41 +1,81 @@
 #include <stdio.h>
 #include <string.h>
 
-int main(){
-    int i,j;
-    
-    printf("Introduzca número de usuarios(máx 10):");
-    scanf("%d",&j);
-    
-    
-    char usuarios[j][30];
-    char apodo[j][15];
-    char contraseña[j][10];
-    int edad[j];
-    float estatura[j];
-    char letra[j];
-    
-    if (j<=10){
-        for(i = 0; i <= j; i++){
-            printf("Introduzca el nombre del usuario[%d](máx 30)",i+1);
-            fgets(usuarios[i],30,stdin);
-            printf("Introduzca el apodo del usuario[%d](máx 15)",i+1);
-            fgets(apodo[i],15,stdin);
-            printf("Introduzca la contraseña del usuario[%d](máx 10)",i+1);
-            fgets(contraseña[i],10,stdin);
-            printf("Introduzca la edad del usuario[%d](máx 30)",i+1);
-            fgets(edad[i],30,stdin);
-            printf("Introduzca la estatura del usuario[%d](máx 15)",i+1);
-            scanf("%f",estatura[i]);
-            printf("Introduzca letra preferida del usuario[%d](máx 10)",i+1);
-            fgets(letra[i],10,stdin);
+#define MAX_USUARIOS 10
+#define MAX_NOMBRE 100
+#define MAX_NICKNAME 30
+#define MAX_PASSWORD 20
 
-        }    
-    }
-    else
-    {
-    printf("El número de usuarios es mayor al permitido");
+int main() {
+    int numUsuarios, i, opcion;
+    
+    char nombres[MAX_USUARIOS][MAX_NOMBRE];
+    char nicknames[MAX_USUARIOS][MAX_NICKNAME];
+    char passwords[MAX_USUARIOS][MAX_PASSWORD];
+    int edades[MAX_USUARIOS];
+    float estaturas[MAX_USUARIOS];
+    char letras[MAX_USUARIOS];
+    
+    printf("¿Cuántas personas desea registrar? (máximo %d): ", MAX_USUARIOS);
+    scanf("%d", &numUsuarios);
+    getchar(); 
+    
+    if (numUsuarios > MAX_USUARIOS) {
+        printf("Error: No se pueden registrar más de %d personas.\n", MAX_USUARIOS);
+        return 1;
     }
     
+    for (i = 0; i < numUsuarios; i++) {
+        printf("\n--- Registro del usuario %d ---\n", i+1);
+        
+        printf("Nombre completo (incluya apellidos): ");
+        fgets(nombres[i], MAX_NOMBRE, stdin);
+        nombres[i][strcspn(nombres[i], "\n")] = 0; 
+        
+        printf("Nickname: ");
+        fgets(nicknames[i], MAX_NICKNAME, stdin);
+        nicknames[i][strcspn(nicknames[i], "\n")] = 0;
+        
+        printf("Contraseña: ");
+        fgets(passwords[i], MAX_PASSWORD, stdin);
+        passwords[i][strcspn(passwords[i], "\n")] = 0;
+        
+        printf("Edad: ");
+        scanf("%d", &edades[i]);
+        getchar();
+        
+        printf("Estatura (en metros): ");
+        scanf("%f", &estaturas[i]);
+        getchar(); 
+        
+        printf("Letra favorita: ");
+        scanf("%c", &letras[i]);
+        getchar();
+    }
+    
+    printf("\n--- Lista de usuarios registrados ---\n");
+    for (i = 0; i < numUsuarios; i++) {
+        printf("%d. %s\n", i+1, nicknames[i]);
+    }
+    
+    do {
+        printf("\nIngrese el número del usuario del cual desea ver sus datos (1-%d, 0 para salir): ", numUsuarios);
+        scanf("%d", &opcion);
+        
+        if (opcion > 0 && opcion <= numUsuarios) {
+            i = opcion - 1;
+            printf("\n--- Datos completos del usuario %d ---\n", opcion);
+            printf("Nombre completo: %s\n", nombres[i]);
+            printf("Nickname: %s\n", nicknames[i]);
+            printf("Contraseña: %s\n", passwords[i]);
+            printf("Edad: %d años\n", edades[i]);
+            printf("Estatura: %.2f metros\n", estaturas[i]);
+            printf("Letra favorita: %c\n", letras[i]);
+        } else if (opcion != 0) {
+            printf("Opción inválida. Intente de nuevo.\n");
+        }
+    } while (opcion != 0);
+    
+    printf("Programa finalizado.\n");
     return 0;
 }
