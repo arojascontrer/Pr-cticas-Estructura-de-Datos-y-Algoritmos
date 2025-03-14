@@ -55,6 +55,7 @@ int main () {
             printf("%c", add_string[i]);
         }
         printf("\n");
+        free(add_string);
         return 0;
     }
     else
