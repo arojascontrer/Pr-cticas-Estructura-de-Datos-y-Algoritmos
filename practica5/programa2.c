@@ -34,7 +34,7 @@ int estaVacia(Cola* cola) {
 // Añadir un pedido a la cola
 void agregarPedido(Cola* cola, char nombre[], int mesa, char platillo[]) {
     if (cola->tamaño >= MAX_PEDIDOS) {
-        printf("⚠️ La cola está llena. No se pueden agregar más pedidos.\n");
+        printf("La cola está llena. No se pueden agregar más pedidos.\n");
         return;
     }
     
@@ -51,18 +51,18 @@ void agregarPedido(Cola* cola, char nombre[], int mesa, char platillo[]) {
         cola->final = nuevo;
     }
     cola->tamaño++;
-    printf("✅ Pedido agregado: %s, Mesa: %d, Platillo: %s\n", nombre, mesa, platillo);
+    printf("Pedido agregado: %s, Mesa: %d, Platillo: %s\n", nombre, mesa, platillo);
 }
 
 // Retirar un pedido de la cola
 void recogerPedido(Cola* cola) {
     if (estaVacia(cola)) {
-        printf("⚠️ No hay pedidos para recoger.\n");
+        printf("No hay pedidos para recoger.\n");
         return;
     }
 
     Pedido* temp = cola->frente;
-    printf("🍽️ Recogiendo pedido: %s, Mesa: %d, Platillo: %s\n", temp->nombre, temp->mesa, temp->platillo);
+    printf("Recogiendo pedido: %s, Mesa: %d, Platillo: %s\n", temp->nombre, temp->mesa, temp->platillo);
     
     cola->frente = cola->frente->siguiente;
     free(temp);
@@ -114,7 +114,7 @@ int main() {
 
                     agregarPedido(&colaPedidos, nombre, mesa, platillo);
                 } else {
-                    printf("⚠️ La cola está llena. No se pueden añadir más pedidos.\n");
+                    printf("La cola está llena. No se pueden añadir más pedidos.\n");
                 }
                 break;
 
@@ -123,13 +123,13 @@ int main() {
                 break;
 
             case 3:
-                printf("🧹 Vaciando cola antes de salir...\n");
+                printf("Vaciando cola antes de salir...\n");
                 vaciarCola(&colaPedidos);
-                printf("✅ Todos los pedidos fueron despachados.\n");
+                printf("Todos los pedidos fueron despachados.\n");
                 break;
 
             default:
-                printf("❌ Opción no válida. Intente de nuevo.\n");
+                printf("Opción no válida. Intente de nuevo.\n");
         }
     } while (opcion != 3);
 
